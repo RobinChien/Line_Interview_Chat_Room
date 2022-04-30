@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_send_24.xml" value="0.211" />
         <entry key="app/src/main/res/drawable/rounded_edittext.xml" value="0.211" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2006340579710145" />
+        <entry key="app/src/main/res/layout/fragment_add_new_friend.xml" value="0.14583333333333334" />
         <entry key="app/src/main/res/layout/fragment_chat_log.xml" value="0.2006340579710145" />
         <entry key="app/src/main/res/layout/fragment_friends.xml" value="0.2006340579710145" />
         <entry key="app/src/main/res/layout/friend_with_last_chat_row.xml" value="0.14583333333333334" />

@@ -13,8 +13,8 @@ data class ChatMessage(
     @ColumnInfo(name=Message.Column.text)
     val text: String = "",
 
-    @ColumnInfo(name=Message.Column.timeStamp)
-    val timeStamp: Date = Date(),
+    @ColumnInfo(name=Message.Column.timestamp)
+    val timestamp: Long = 0,
 
     @ColumnInfo(name=Message.Column.fromUserId)
     val fromUserId: UUID? = null,
@@ -26,7 +26,7 @@ data class ChatMessage(
         object Column {
             const val id = "id"
             const val text = "text"
-            const val timeStamp = "timeStamp"
+            const val timestamp = "timestamp"
             const val fromUserId = "from_user_id"
             const val toUserId = "to_user_id"
         }

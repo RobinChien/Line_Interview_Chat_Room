@@ -1,6 +1,6 @@
 package com.example.line_interview_chatbot.ui.fragment
 
-import android.content.Intent
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.line_interview_chatbot.R
 import com.example.line_interview_chatbot.data.model.ChatMessage
-import com.example.line_interview_chatbot.ui.view.FriendWithLatestMessageRow
+import com.example.line_interview_chatbot.data.model.User
+import com.example.line_interview_chatbot.ui.view.FriendItemRow
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.xwray.groupie.GroupAdapter
@@ -35,42 +36,69 @@ class FriendsFragment: BaseFragment() {
         listenForLatestMessages()
 
         adapter.setOnItemClickListener { item, _ ->
-            val row = item as FriendWithLatestMessageRow
-            val chatLogFragment = row.chatPartnerUser?.let {
-                ChatLogFragment.newInstance(it)
-            } ?: return@setOnItemClickListener
+            val row = item as FriendItemRow
+            val chatLogFragment = row.friend.let {
+                ChatLogFragment.newInstance(user = it)
+            }
             mFragmentNavigation?.pushFragment(chatLogFragment)
         }
 
         add_friend_fab.setOnClickListener {
-            
+
         }
     }
 
     private fun refreshRecyclerViewMessages() {
         adapter.clear()
         latestMessagesMap.values.forEach {
-            adapter.add(FriendWithLatestMessageRow(it))
+            fetchParentFriendOfChatMessage(it)
+//            adapter.add(FriendItemRow(it))
         }
+    }
+
+    private fun fetchParentFriendOfChatMessage(chatMessage: ChatMessage) {
+        val chatPartnerId: String = if (chatMessage.fromUserId.toString() == FirebaseAuth.getInstance().uid) {
+            chatMessage.toUserId.toString()
+        } else {
+            chatMessage.fromUserId.toString()
+        }
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$chatPartnerId")
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                val parentUser = p0.getValue(User::class.java)
+                parentUser?.let {
+                    adapter.add(FriendItemRow(
+                        friend = it,
+                        chatMessage = chatMessage,
+                        isNewFriend = false
+                    ))
+                }
+            }
+
+        })
     }
 
     private fun listenForLatestMessages() {
         val fromId = FirebaseAuth.getInstance().uid ?: return
         val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId")
 
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.d(TAG, "database error: " + databaseError.message)
-            }
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                Log.d(TAG, "has children: " + dataSnapshot.hasChildren())
-//                if (!dataSnapshot.hasChildren()) {
-//                    swiperefresh.isRefreshing = false
-//                }
-            }
-
-        })
+//        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onCancelled(databaseError: DatabaseError) {
+//                Log.d(TAG, "database error: " + databaseError.message)
+//            }
+//
+//            override fun onDataChange(dataSnapshot: DataSnapshot) {
+//                Log.d(TAG, "has children: " + dataSnapshot.hasChildren())
+////                if (!dataSnapshot.hasChildren()) {
+////                    swiperefresh.isRefreshing = false
+////                }
+//            }
+//
+//        })
 
 
         ref.addChildEventListener(object : ChildEventListener {
