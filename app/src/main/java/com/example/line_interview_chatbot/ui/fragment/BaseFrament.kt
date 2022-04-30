@@ -36,11 +36,9 @@ abstract class BaseFragment : Fragment() {
 
     interface FragmentNavigation {
         fun pushFragment(fragment: Fragment?)
-        fun switchSegment(@FragNavController.TabIndex index: Int)
         fun popFragment()
         fun popFragmentToRoot()
         fun clearStack()
-        fun switchTab(bottomNavigationIndex: Int, pushFragments: List<Fragment> = emptyList())
         fun currentTab(): Int?
     }
 

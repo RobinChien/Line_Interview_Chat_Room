@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "349527725744",
+    "firebase_url": "https://chatroom-1b64d-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "chatroom-1b64d",
+    "storage_bucket": "chatroom-1b64d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349527725744:android:84aec8be9c038b58c9cd75",
+        "android_client_info": {
+          "package_name": "com.example.line_interview_chatbot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349527725744-osbhi5pd1t2geu0p7amn76krr1k9j4pv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuWF1KsKO28qpKEPIowrIGjb6HAhEtEkU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349527725744-osbhi5pd1t2geu0p7amn76krr1k9j4pv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

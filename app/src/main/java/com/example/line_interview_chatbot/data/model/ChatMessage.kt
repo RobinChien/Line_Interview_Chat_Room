@@ -17,10 +17,10 @@ data class ChatMessage(
     val timeStamp: Date = Date(),
 
     @ColumnInfo(name=Message.Column.fromUserId)
-    val fromUserId: Int = 0,
+    val fromUserId: UUID? = null,
 
     @ColumnInfo(name=Message.Column.toUserId)
-    val toUserId: Int = 0,
+    val toUserId: UUID? = null,
 ) : Serializable {
     object Message {
         object Column {
