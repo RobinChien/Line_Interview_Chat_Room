@@ -5,12 +5,12 @@ import androidx.room.Entity
 import java.util.*
 
 @Entity
-data class Message(
+data class ChatMessage(
     @ColumnInfo(name= Message.Column.id)
     val id: Int = 0,
 
-    @ColumnInfo(name=Message.Column.message)
-    val message: String = "",
+    @ColumnInfo(name=Message.Column.text)
+    val text: String = "",
 
     @ColumnInfo(name=Message.Column.timeStamp)
     val timeStamp: Date = Date(),
@@ -24,7 +24,7 @@ data class Message(
     object Message {
         object Column {
             const val id = "id"
-            const val message = "message"
+            const val text = "text"
             const val timeStamp = "timeStamp"
             const val fromUserId = "from_user_id"
             const val toUserId = "to_user_id"

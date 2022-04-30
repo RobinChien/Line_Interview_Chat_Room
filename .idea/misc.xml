@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2006340579710145" />
+        <entry key="app/src/main/res/layout/fragment_friends.xml" value="0.2006340579710145" />
+        <entry key="app/src/main/res/layout/friend_with_last_chat_row.xml" value="0.14583333333333334" />
+        <entry key="app/src/main/res/layout/friend_with_lastest_message_row.xml" value="0.25" />
       </map>
     </option>
   </component>
