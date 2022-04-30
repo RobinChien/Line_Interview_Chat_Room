@@ -1,6 +1,5 @@
 package com.example.line_interview_chatbot.ui.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -48,23 +47,23 @@ class AddNewFriendFragment : BaseFragment() {
                     Log.d(TAG, it.toString())
                     @Suppress("NestedLambdaShadowedImplicitParameter")
                     it.getValue(User::class.java)?.let {
-                        if (it.id.toString() != FirebaseAuth.getInstance().uid) {
+                        if (it.uid.toString() != FirebaseAuth.getInstance().uid) {
                             adapter.add(FriendItemRow(friend = it, isNewFriend = true))
                         }
                     }
                 }
 
                 adapter.setOnItemClickListener { item, view ->
-//                    val userItem = item as UserItem
-//                    val intent = Intent(view.context, ChatLogActivity::class.java)
-//                    intent.putExtra(USER_KEY, userItem.user)
-//                    startActivity(intent)
-//                    finish()
+                    mFragmentNavigation?.popFragmentToRoot()
                 }
 
                 recyclerview_new_friend.adapter = adapter
             }
 
         })
+    }
+
+    companion object {
+        fun newInstance(): AddNewFriendFragment = AddNewFriendFragment()
     }
 }

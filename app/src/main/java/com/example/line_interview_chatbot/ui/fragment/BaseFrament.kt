@@ -46,10 +46,6 @@ abstract class BaseFragment : Fragment() {
         setTitle(titleBase)
     }
 
-    fun onTabTransaction(index: Int) {
-        setTitle(titleBase)
-    }
-
     protected fun setTitle(title: String?) {
         this.titleBase = title
         val activity = activity as? AppCompatActivity ?: return

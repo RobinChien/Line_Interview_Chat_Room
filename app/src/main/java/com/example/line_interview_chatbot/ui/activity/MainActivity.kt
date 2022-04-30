@@ -24,8 +24,6 @@ class MainActivity : NavigationAppCompatActivity() {
         fetchCurrentUser()
     }
 
-    override fun onTabTransaction(fragment: Fragment?, index: Int) {}
-
     override val numberOfRootFragments: Int
         get() = 1
 

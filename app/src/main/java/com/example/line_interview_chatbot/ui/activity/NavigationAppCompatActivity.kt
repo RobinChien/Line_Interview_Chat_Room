@@ -10,8 +10,12 @@ import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavTransactionOptions
 import com.ncapdevi.fragnav.tabhistory.NavigationStrategy
 
-abstract class NavigationAppCompatActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
-    FragNavController.TransactionListener, FragNavController.RootFragmentListener {
+abstract class NavigationAppCompatActivity :
+    AppCompatActivity(),
+    BaseFragment.FragmentNavigation,
+    FragNavController.TransactionListener,
+    FragNavController.RootFragmentListener
+{
     private val TAG = this.javaClass.name
     private val pushAndPopTransaction by lazy {
         FragNavTransactionOptions.Builder().customAnimations(
@@ -83,6 +87,8 @@ abstract class NavigationAppCompatActivity : AppCompatActivity(), BaseFragment.F
         actionBar?.setDisplayHomeAsUpEnabled(!(fragNavController?.isRootFragment ?: true))
         (fragment as? BaseFragment)?.onFragmentTransaction(transactionType)
     }
+
+    override fun onTabTransaction(fragment: Fragment?, index: Int) {}
 
     override fun onBackPressed() {
         if (!tryPopFragment()) {
