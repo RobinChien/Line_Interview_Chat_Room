@@ -2,6 +2,7 @@ package com.example.line_interview_chatbot.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import java.io.Serializable
 import java.util.*
 
 @Entity
@@ -20,7 +21,7 @@ data class ChatMessage(
 
     @ColumnInfo(name=Message.Column.toUserId)
     val toUserId: Int = 0,
-) {
+) : Serializable {
     object Message {
         object Column {
             const val id = "id"
