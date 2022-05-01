@@ -52,7 +52,6 @@ class FriendsFragment: BaseFragment() {
         adapter.clear()
         latestMessagesMap.values.forEach {
             fetchParentFriendOfChatMessage(it)
-//            adapter.add(FriendItemRow(it))
         }
     }
 
@@ -85,21 +84,6 @@ class FriendsFragment: BaseFragment() {
     private fun listenForLatestMessages() {
         val fromId = FirebaseAuth.getInstance().uid ?: return
         val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId")
-
-//        ref.addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onCancelled(databaseError: DatabaseError) {
-//                Log.d(TAG, "database error: " + databaseError.message)
-//            }
-//
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                Log.d(TAG, "has children: " + dataSnapshot.hasChildren())
-////                if (!dataSnapshot.hasChildren()) {
-////                    swiperefresh.isRefreshing = false
-////                }
-//            }
-//
-//        })
-
 
         ref.addChildEventListener(object : ChildEventListener {
             override fun onCancelled(databaseError: DatabaseError) {

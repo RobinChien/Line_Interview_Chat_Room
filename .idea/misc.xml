@@ -5,7 +5,11 @@
       <map>
         <entry key="app/src/main/res/drawable/ic_baseline_send_24.xml" value="0.211" />
         <entry key="app/src/main/res/drawable/rounded_edittext.xml" value="0.211" />
+        <entry key="app/src/main/res/drawable/shape_bg_incoming_bubble.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/shape_bg_outgoing_bubble.xml" value="0.1555" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2006340579710145" />
+        <entry key="app/src/main/res/layout/chat_from_row.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/chat_to_row.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_add_new_friend.xml" value="0.14583333333333334" />
         <entry key="app/src/main/res/layout/fragment_chat_log.xml" value="0.2006340579710145" />
         <entry key="app/src/main/res/layout/fragment_friends.xml" value="0.2006340579710145" />
@@ -13,7 +17,10 @@
         <entry key="app/src/main/res/layout/fragment_signup.xml" value="0.14583333333333334" />
         <entry key="app/src/main/res/layout/friend_with_last_chat_row.xml" value="0.14583333333333334" />
         <entry key="app/src/main/res/layout/friend_with_lastest_message_row.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/toolbar.xml" value="0.14583333333333334" />
+        <entry key="app/src/main/res/menu/menu_cancel.xml" value="0.14583333333333334" />
         <entry key="app/src/main/res/menu/menu_done.xml" value="0.14583333333333334" />
+        <entry key="app/src/main/res/menu/menu_sign_out.xml" value="0.14583333333333334" />
       </map>
     </option>
   </component>
