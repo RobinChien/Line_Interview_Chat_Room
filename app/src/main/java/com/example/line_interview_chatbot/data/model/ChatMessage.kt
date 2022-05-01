@@ -8,7 +8,7 @@ import java.util.*
 @Entity
 data class ChatMessage(
     @ColumnInfo(name= Message.Column.id)
-    val id: Int = 0,
+    val id: String = "",
 
     @ColumnInfo(name=Message.Column.text)
     val text: String = "",
