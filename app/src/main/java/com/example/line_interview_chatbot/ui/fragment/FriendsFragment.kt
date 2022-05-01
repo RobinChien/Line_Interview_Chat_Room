@@ -44,7 +44,7 @@ class FriendsFragment: BaseFragment() {
         }
 
         add_friend_fab.setOnClickListener {
-
+            mFragmentNavigation?.pushFragment(AddNewFriendFragment.newInstance())
         }
     }
 

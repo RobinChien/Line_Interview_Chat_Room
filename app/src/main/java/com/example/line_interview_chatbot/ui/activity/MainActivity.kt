@@ -1,11 +1,14 @@
 package com.example.line_interview_chatbot.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.example.line_interview_chatbot.R
 import com.example.line_interview_chatbot.data.model.User
 import com.example.line_interview_chatbot.ui.fragment.FriendsFragment
+import com.example.line_interview_chatbot.ui.fragment.LoginFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -16,12 +19,42 @@ import java.lang.IllegalStateException
 
 class MainActivity : NavigationAppCompatActivity() {
     private val TAG = this.javaClass.simpleName
-    private val INDEX_FRIENDS = FragNavController.TAB1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        if (!verifyUserIsLoggedIn()) {
+            pushFragment(LoginFragment.newInstance())
+        }
         fetchCurrentUser()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_sign_in_and_out, menu)
+        val item = if (!verifyUserIsLoggedIn()) {
+            menu.findItem(R.id.menu_item_sign_out)
+        } else {
+            menu.findItem(R.id.menu_item_sign_in)
+        }
+        item.isVisible = false
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_item_sign_in -> {
+                if (!verifyUserIsLoggedIn()) {
+                    pushFragment(LoginFragment.newInstance())
+                }
+            }
+            R.id.menu_item_sign_out -> {
+                FirebaseAuth.getInstance().signOut()
+                pushFragment(LoginFragment.newInstance())
+            }
+            android.R.id.home -> popFragment()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override val numberOfRootFragments: Int
@@ -30,8 +63,14 @@ class MainActivity : NavigationAppCompatActivity() {
     override fun getRootFragment(index: Int): Fragment {
         when(index) {
             INDEX_FRIENDS -> return FriendsFragment.newInstance()
+            INDEX_LOGIN -> return LoginFragment.newInstance()
         }
         throw IllegalStateException("$TAG: getRootFragment: index not found")
+    }
+
+    private fun verifyUserIsLoggedIn(): Boolean {
+        FirebaseAuth.getInstance().uid ?: return false
+        return true
     }
 
     private fun fetchCurrentUser() {
@@ -49,5 +88,7 @@ class MainActivity : NavigationAppCompatActivity() {
 
     companion object {
         var currentUser: User? = null
+        private val INDEX_FRIENDS = FragNavController.TAB1
+        private val INDEX_LOGIN = FragNavController.TAB2
     }
 }

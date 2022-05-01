@@ -1,6 +1,7 @@
 package com.example.line_interview_chatbot.ui.activity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -98,7 +99,7 @@ abstract class NavigationAppCompatActivity :
 
     @get:IdRes
     protected val containerId: Int
-        get() = R.id.layout_fragment
+        protected get() = R.id.layout_fragment
 
     private fun tryPopFragment(): Boolean {
         return fragNavController?.isRootFragment == false &&

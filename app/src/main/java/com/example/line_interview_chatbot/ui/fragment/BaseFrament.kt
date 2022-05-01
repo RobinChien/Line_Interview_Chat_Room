@@ -9,21 +9,13 @@ import com.ncapdevi.fragnav.FragNavController
 abstract class BaseFragment : Fragment() {
     var mFragmentNavigation: FragmentNavigation? = null
         protected set
-    protected var titleBase: String? = ""
-    var attached = false
-        private set
+    private var titleBase: String? = ""
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is FragmentNavigation) {
             mFragmentNavigation = context
         }
-        attached = true
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        attached = false
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
@@ -49,19 +41,6 @@ abstract class BaseFragment : Fragment() {
     protected fun setTitle(title: String?) {
         this.titleBase = title
         val activity = activity as? AppCompatActivity ?: return
-        val actionBar = activity.supportActionBar ?: return
-        if (title == null) {
-            actionBar.hide()
-        } else {
-            actionBar.show()
-            activity.title = title
-        }
-    }
-
-    protected fun setActionBarVisibility(fragmentActivity: FragmentActivity, visible: Boolean) {
-        val activity = fragmentActivity as? AppCompatActivity
-        val actionBar = activity?.supportActionBar
-        actionBar?.setDisplayHomeAsUpEnabled(visible)
-        actionBar?.setDisplayShowHomeEnabled(visible)
+        activity.title = title
     }
 }

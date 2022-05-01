@@ -47,7 +47,8 @@ class AddNewFriendFragment : BaseFragment() {
                     Log.d(TAG, it.toString())
                     @Suppress("NestedLambdaShadowedImplicitParameter")
                     it.getValue(User::class.java)?.let {
-                        if (it.uid.toString() != FirebaseAuth.getInstance().uid) {
+                        if (it.uid != FirebaseAuth.getInstance().uid) {
+                            Log.d(TAG, "User: ${it}")
                             adapter.add(FriendItemRow(friend = it, isNewFriend = true))
                         }
                     }
@@ -55,6 +56,8 @@ class AddNewFriendFragment : BaseFragment() {
 
                 adapter.setOnItemClickListener { item, view ->
                     mFragmentNavigation?.popFragmentToRoot()
+                    val friendItem = item as FriendItemRow
+                    mFragmentNavigation?.pushFragment(ChatLogFragment.newInstance(friendItem.friend))
                 }
 
                 recyclerview_new_friend.adapter = adapter
