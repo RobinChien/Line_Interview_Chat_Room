@@ -55,13 +55,10 @@ class LoginFragment: BaseFragment() {
 
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {
+                (activity as MainActivity).fetchCurrentUser()
                 if (!it.isSuccessful) return@addOnCompleteListener
                 Log.d(TAG, "Successfully logged in: ${it.result!!.user?.uid}")
-
-                val intent = Intent(context, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-                activity?.finish()
+                mFragmentNavigation?.popFragmentToRoot()
             }
             .addOnFailureListener {
                 Toast.makeText(context, "${it.message}", Toast.LENGTH_SHORT).show()

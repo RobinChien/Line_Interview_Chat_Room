@@ -2,6 +2,7 @@ package com.example.line_interview_chatbot.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
@@ -19,6 +20,7 @@ import java.lang.IllegalStateException
 
 class MainActivity : NavigationAppCompatActivity() {
     private val TAG = this.javaClass.simpleName
+    var currentUser: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +53,7 @@ class MainActivity : NavigationAppCompatActivity() {
             R.id.menu_item_sign_out -> {
                 FirebaseAuth.getInstance().signOut()
                 pushFragment(LoginFragment.newInstance())
+                currentUser = null
             }
             android.R.id.home -> popFragment()
         }
@@ -69,11 +72,12 @@ class MainActivity : NavigationAppCompatActivity() {
     }
 
     private fun verifyUserIsLoggedIn(): Boolean {
+        Log.d(TAG, "FirebaseAuth.getInstance().uid: ${FirebaseAuth.getInstance().uid}")
         FirebaseAuth.getInstance().uid ?: return false
         return true
     }
 
-    private fun fetchCurrentUser() {
+    fun fetchCurrentUser() {
         val uid = FirebaseAuth.getInstance().uid ?: return
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -82,12 +86,12 @@ class MainActivity : NavigationAppCompatActivity() {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 currentUser = dataSnapshot.getValue(User::class.java)
+                Log.d(TAG, "fetchCurrentUser: currentUser: ${currentUser}")
             }
         })
     }
 
     companion object {
-        var currentUser: User? = null
         private val INDEX_FRIENDS = FragNavController.TAB1
         private val INDEX_LOGIN = FragNavController.TAB2
     }

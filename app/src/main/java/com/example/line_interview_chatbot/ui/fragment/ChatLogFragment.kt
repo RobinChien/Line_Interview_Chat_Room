@@ -68,8 +68,10 @@ class ChatLogFragment : BaseFragment() {
     private fun listenForMessages() {
         val fromId = FirebaseAuth.getInstance().uid ?: return
         val toId = toUser?.uid
+        val currentUser = (activity as MainActivity).currentUser ?: return
+
         ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
-        childEventListener = ChildEventListener(recyclerview_chat_log, adapter, toUser!!)
+        childEventListener = ChildEventListener(recyclerview_chat_log, adapter, currentUser, toUser!!)
         childEventListener?.apply {
             ref?.addChildEventListener(this)
         }
@@ -117,6 +119,7 @@ class ChatLogFragment : BaseFragment() {
     private class ChildEventListener(
         val recyclerView: RecyclerView,
         val adapter: GroupAdapter<ViewHolder>,
+        val fromUser: User,
         val toUser: User
         ): com.google.firebase.database.ChildEventListener
     {
@@ -125,8 +128,7 @@ class ChatLogFragment : BaseFragment() {
             p0.getValue(ChatMessage::class.java)?.let {
                 Log.d(TAG, "onChildAdded: chat message: ${it}")
                 if (it.fromUserId == FirebaseAuth.getInstance().uid) {
-                    val currentUser = MainActivity.currentUser ?: return
-                    adapter.add(ChatFromItem(it.text, currentUser, it.timestamp))
+                    adapter.add(ChatFromItem(it.text, fromUser, it.timestamp))
                 } else {
                     adapter.add(ChatToItem(it.text, toUser, it.timestamp))
                 }

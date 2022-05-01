@@ -77,10 +77,8 @@ class SignupFragment: BaseFragment() {
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d(TAG, "Finally we saved the user to Firebase Database")
-                val intent = Intent(context, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-                activity?.finish()
+                (activity as MainActivity).fetchCurrentUser()
+                mFragmentNavigation?.popFragmentToRoot()
             }
             .addOnFailureListener {
                 Log.d(TAG, "Failed to set value to database: ${it.message}")

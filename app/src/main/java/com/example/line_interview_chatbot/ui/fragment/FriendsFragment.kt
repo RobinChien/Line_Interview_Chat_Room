@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.example.line_interview_chatbot.R
 import com.example.line_interview_chatbot.data.model.ChatMessage
 import com.example.line_interview_chatbot.data.model.User
+import com.example.line_interview_chatbot.ui.activity.MainActivity
 import com.example.line_interview_chatbot.ui.view.FriendItemRow
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -33,18 +34,31 @@ class FriendsFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setTitle("My Friends")
         recyclerview_friends.adapter = adapter
-        listenForLatestMessages()
-
-        adapter.setOnItemClickListener { item, _ ->
-            val row = item as FriendItemRow
-            val chatLogFragment = row.friend.let {
-                ChatLogFragment.newInstance(user = it)
-            }
-            mFragmentNavigation?.pushFragment(chatLogFragment)
-        }
-
         add_friend_fab.setOnClickListener {
             mFragmentNavigation?.pushFragment(AddNewFriendFragment.newInstance())
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        latestMessagesMap.clear()
+        adapter.clear()
+
+        if (FirebaseAuth.getInstance().uid != null) {
+            listenForLatestMessages()
+
+            adapter.setOnItemClickListener { item, _ ->
+                val row = item as FriendItemRow
+                val chatLogFragment = row.friend.let {
+                    ChatLogFragment.newInstance(user = it)
+                }
+                mFragmentNavigation?.pushFragment(chatLogFragment)
+            }
+            add_friend_fab.visibility = View.VISIBLE
+
+        } else {
+            add_friend_fab.visibility = View.GONE
         }
     }
 
