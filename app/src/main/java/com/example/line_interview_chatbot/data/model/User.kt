@@ -11,11 +11,15 @@ data class User(
 
     @ColumnInfo(name= User.Column.uid)
     val name: String = "",
+
+    @ColumnInfo(name= User.Column.email)
+    val email: String = "",
 ) : Serializable {
     object User {
         object Column {
             const val uid = "uid"
             const val name = "name"
+            const val email = "email"
         }
     }
 }
