@@ -1,5 +1,6 @@
 package com.example.line_interview_chatbot.ui.view
 
+import android.util.Log
 import android.view.View
 import com.example.line_interview_chatbot.R
 import com.example.line_interview_chatbot.data.model.ChatMessage
@@ -10,7 +11,7 @@ import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.friend_item_row.view.*
 
 class FriendItemRow(val friend: User, val chatMessage: ChatMessage? = null, val isNewFriend: Boolean = false) : Item<ViewHolder>() {
-
+    val TAG = this.javaClass.simpleName
     override fun getLayout(): Int {
         return R.layout.friend_item_row
     }

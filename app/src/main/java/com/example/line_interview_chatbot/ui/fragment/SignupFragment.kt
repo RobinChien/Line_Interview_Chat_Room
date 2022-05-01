@@ -53,7 +53,7 @@ class SignupFragment: BaseFragment() {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (!it.isSuccessful) return@addOnCompleteListener
-                saveUserToFirebaseDatabase()
+                saveUserToFirebaseDatabase(name, email)
                 Log.d(TAG, "Successfully created user with uid: ${it.result!!.user?.uid}")
             }
             .addOnFailureListener {
@@ -62,11 +62,11 @@ class SignupFragment: BaseFragment() {
             }
     }
 
-    private fun saveUserToFirebaseDatabase(name: String = "") {
+    private fun saveUserToFirebaseDatabase(name: String = "", email: String = "") {
         val uid = FirebaseAuth.getInstance().uid ?: return
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
 
-        val user = User(uid = uid, name = name)
+        val user = User(uid = uid, name = name, email = email)
 
         ref.setValue(user)
             .addOnSuccessListener {
