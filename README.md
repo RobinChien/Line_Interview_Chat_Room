@@ -5,3 +5,6 @@
 - Friend list and last message page
 - Add new friend page
 - Chat log page
+
+## Unfinished
+- Store chat log and friends in local SQLite
